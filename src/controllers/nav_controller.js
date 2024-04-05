@@ -15,16 +15,17 @@ export default class extends Controller {
 
   toggle() {
     if (this.buttonState == "CLOSED") {
-      this.toggleNavButtonTarget.textContent = "="
+      this.toggleNavButtonTarget.textContent = "X"
       this.navTarget.classList.remove("hidden")
       this.buttonState = "OPEN"
     } else if (this.buttonState == "OPEN") {
-      this.toggleNavButtonTarget.textContent = "X"
+      this.toggleNavButtonTarget.textContent = "="
       this.navTarget.classList.add("hidden")
       this.buttonState = "CLOSED"
     } else {
       this.toggleNavButtonTarget.textContent = "X"
       this.drillNavTarget.innerHTML = ""
+      this.drillNavTarget.classList.add("hidden")
       this.navTarget.classList.remove("hidden")
       this.buttonState = "OPEN"
     }
@@ -32,7 +33,7 @@ export default class extends Controller {
 
   drillDownNavigation(event) {
     const target = event.target
-    const node = target.parentElement.querySelector("ol").cloneNode(true)
+    const node = target.closest("li").querySelector("ol").cloneNode(true)
 
     this.navTarget.classList.add("hidden")
 
