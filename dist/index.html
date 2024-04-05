@@ -9,14 +9,14 @@
   </head>
 
   <body data-controller="nav">
-    <header class="bg-slate-100 flex flex-col border-b-2 border-indigo-400">
-      <div class="flex py-4 px-3 justify-between w-full">
-        <div class="text-blue-900">char.gy logo</div>
-        <div data-nav-target="toggleNavButton" data-action="click->nav#toggle">=</div>
+    <header class="bg-slate-100 w-full flex flex-col items-between border-b-2 border-indigo-400 justify-between md:flex-row">
+      <div class="flex w-full md:w-6 justify-between align-center">
+        <div class="py-4 px-3 text-blue-900 inline-block">char.gy</div>
+        <div data-nav-target="toggleNavButton" data-action="click->nav#toggle" class="flex items-center w-4 mr-4 md:hidden">=</div>
       </div>
 
-      <nav class="hidden px-3 pb-4" data-nav-target="nav">
-        <ol>
+      <nav class="hidden md:flex md:w-5/6 md:mr-6 items-center px-3 pb-4 md:p-0" data-nav-target="nav">
+        <ol class="md:flex md:justify-end gap-16 md:w-full">
           <li>
             <p data-action="click->nav#drillDownNavigation">Councils & Business<span class="ml-2">></span></p>
             <ol class="hidden">
@@ -37,7 +37,7 @@
               <li class="mt-3">Title #1.6</li>
             </ol>
           </li>
-          <li class="mt-3">
+          <li class="mt-3  md:mt-0">
             <p data-action="click->nav#drillDownNavigation">Drivers<span class="ml-2">></span></p>
             <ol class="hidden">
               <li>
@@ -57,7 +57,7 @@
               <li class="mt-3">Title #2.6</li>
             </ol>
           </li>
-          <li class="mt-3">
+          <li class="mt-3 md:mt-0">
             <p data-action="click->nav#drillDownNavigation">Impact<span class="ml-2">></span></p>
             <ol class="hidden">
               <li>
@@ -77,14 +77,12 @@
               <li class="mt-3">Title #3.6</li>
             </ol>
           </li>
-          <li class="mt-3">Find Charger</li>
-          <li class="mt-3">Sign In</li>
+          <li class="mt-3 md:mt-0">Find Charger</li>
+          <li class="mt-3 md:mt-0">Sign In</li>
         </ol>
       </nav>
 
-      <nav class="hidden px-3 pb-4" data-nav-target="drillNav">
-
-      </nav>
+      <nav class="hidden px-3 pb-4" data-nav-target="drillNav"></nav>
     </header>
   </body>
 </html>
