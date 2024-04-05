@@ -35,12 +35,21 @@ export default class extends Controller {
     const target = event.target
     const node = target.closest("li").querySelector("ol").cloneNode(true)
 
+    console.log(node)
+    console.log(this.drillNavTarget.childElementCount)
+
     this.navTarget.classList.add("hidden")
 
-    this.drillNavTarget.appendChild(node)
-    node.classList.remove("hidden")
-    this.drillNavTarget.classList.remove("hidden")
-    this.toggleNavButtonTarget.textContent = "<"
-    this.buttonState = "DRILL"
+    if (this.drillNavTarget.childElementCount < 1) {
+      this.drillNavTarget.appendChild(node)
+      node.classList.remove("hidden")
+      this.drillNavTarget.classList.remove("hidden")
+      this.toggleNavButtonTarget.textContent = "<"
+      this.buttonState = "DRILL"
+    } else {
+      this.drillNavTarget.innerHTML = ""
+      this.drillNavTarget.classList.add("hidden")
+      this.navTarget.classList.remove("hidden")
+    }
   }
 }
