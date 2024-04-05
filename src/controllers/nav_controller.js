@@ -4,16 +4,20 @@ export default class extends Controller {
   static targets = [
     "toggleNavButton",
     "nav",
-    "drillNav",
-    "section1Title",
-    "section1Links",
+    "drillNav"
   ]
+
+  static values = {
+    currentGroup: String
+  }
 
   connect() {
     this.buttonState = "CLOSED"
   }
 
   toggle() {
+    console.log(this.currentGroupValue)
+
     if (this.buttonState == "CLOSED") {
       this.toggleNavButtonTarget.textContent = "X"
       this.navTarget.classList.remove("hidden")
@@ -32,9 +36,19 @@ export default class extends Controller {
     }
   }
 
+  // currentGroupValueChanged() {
+  //   console.log(`chanrged ${this.currentGroupValue}`)
+  // }
+
   drillDownNavigation(event) {
     const target = event.target
-    const node = target.closest("li").querySelector("ol").cloneNode(true)
+    const navigationListItem = target.closest("li")
+
+    const selectedGroup = navigationListItem.dataset["groupName"]
+
+    const node = navigationListItem.querySelector("ol").cloneNode(true)
+
+    console.log("selectedGroup", selectedGroup)
 
     this.navTarget.classList.add("hidden")
 
@@ -48,11 +62,28 @@ export default class extends Controller {
       this.toggleNavButtonTarget.textContent = "<"
       this.buttonState = "DRILL"
     } else {
-      this.drillNavTarget.innerHTML = ""
-      this.drillNavTarget.classList.add("hidden")
-      this.drillNavTarget.classList.remove("md:flex")
+      if (this.currentGroupValue == selectedGroup) {
+        console.log("current is same as selected")
+        this.drillNavTarget.innerHTML = ""
+        this.drillNavTarget.classList.add("hidden")
+        this.drillNavTarget.classList.remove("md:flex")
+        this.navTarget.classList.remove("hidden")
+      } else {
+        console.log("current not same as selected")
 
-      this.navTarget.classList.remove("hidden")
+        this.drillNavTarget.innerHTML = ""
+
+        this.drillNavTarget.appendChild(node)
+        node.classList.remove("hidden")
+        node.classList.add("md:flex")
+        this.drillNavTarget.classList.remove("hidden")
+        this.drillNavTarget.classList.add("md:flex")
+
+        this.toggleNavButtonTarget.textContent = "<"
+        this.buttonState = "DRILL"
+      }
     }
+
+    this.currentGroupValue = selectedGroup
   }
 }
