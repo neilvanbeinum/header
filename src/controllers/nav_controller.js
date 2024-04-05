@@ -8,7 +8,7 @@ export default class extends Controller {
   ]
 
   static values = {
-    currentGroup: String
+    navigationListItemIndex: Number
   }
 
   connect() {
@@ -36,19 +36,14 @@ export default class extends Controller {
     }
   }
 
-  // currentGroupValueChanged() {
-  //   console.log(`chanrged ${this.currentGroupValue}`)
-  // }
-
   drillDownNavigation(event) {
     const target = event.target
     const navigationListItem = target.closest("li")
-
-    const selectedGroup = navigationListItem.dataset["groupName"]
+    const currentNavigationListItemIndex = Array.from(
+      navigationListItem.parentNode.children
+    ).indexOf(navigationListItem)
 
     const node = navigationListItem.querySelector("ol").cloneNode(true)
-
-    console.log("selectedGroup", selectedGroup)
 
     this.navTarget.classList.add("hidden")
 
@@ -62,15 +57,12 @@ export default class extends Controller {
       this.toggleNavButtonTarget.textContent = "<"
       this.buttonState = "DRILL"
     } else {
-      if (this.currentGroupValue == selectedGroup) {
-        console.log("current is same as selected")
+      if (this.navigationListItemIndex == currentNavigationListItemIndex) {
         this.drillNavTarget.innerHTML = ""
         this.drillNavTarget.classList.add("hidden")
         this.drillNavTarget.classList.remove("md:flex")
         this.navTarget.classList.remove("hidden")
       } else {
-        console.log("current not same as selected")
-
         this.drillNavTarget.innerHTML = ""
 
         this.drillNavTarget.appendChild(node)
@@ -84,6 +76,6 @@ export default class extends Controller {
       }
     }
 
-    this.currentGroupValue = selectedGroup
+    this.navigationListItemIndex = currentNavigationListItemIndex
   }
 }
